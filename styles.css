@@ -52,8 +52,10 @@ body {
 .button {
     border: 1px solid black;
     border-radius: 15px;
-    flex: 0 0 calc((100% - 3 * 15px) / 4);
     height: calc((100% - 4 * 15px) / 5);
-    /* min-height: 0; */
+    flex: 0 0 calc((100% - 3 * 15px) / 4);
+}
 
+#clearAll, #equals {
+    flex: 0 0 calc((100% - 1 * 15px) / 2);
 }
