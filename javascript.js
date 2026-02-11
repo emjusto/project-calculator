@@ -23,12 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
         { id: "decimal", text: ".", type: "number" },
         { id: "equals", text: "=", type: "action" },]
 
-        let calcConSize = 100 / 4;
+        let calcConSize = 25;
 
 buttons.forEach(button => {
     let newButton = document.createElement('div');
     newButton.id = button.id;
-    newButton.style.flex = `0 0 calc(${calcConSize}% - 15px)`;
     newButton.classList.add('button',button.type);
     numCon.appendChild(newButton);
 
