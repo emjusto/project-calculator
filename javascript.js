@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     let calculatorCon = document.querySelector('.calc-box');
-    let resultCon = document.querySelector('.result');
-    let numCon = document.querySelector('.numbers');
+    let resultCon = document.querySelector('.resultCon');
+    let numCon = document.querySelector('.numbersCon');
 
     let buttons = [
         { id: "clearAll", text: "AC", type: "action" },
@@ -23,13 +23,14 @@ document.addEventListener("DOMContentLoaded", () => {
         { id: "decimal", text: ".", type: "number" },
         { id: "equals", text: "=", type: "action" },]
 
-        let calcConSize = 100/ buttons.length;
+        let calcConSize = 100 / 4;
 
 buttons.forEach(button => {
     let newButton = document.createElement('div');
-    div.id = button.id;
+    newButton.id = button.id;
+    newButton.style.flex = `0 0 calc(${calcConSize}% - 15px)`;
     newButton.classList.add('button',button.type);
-    newButton.style.flex = `0 0 calc(${calcConSize}% - 1px)`;
+    numCon.appendChild(newButton);
 
 })
 
