@@ -3,30 +3,35 @@ document.addEventListener("DOMContentLoaded", () => {
     let resultCon = document.querySelector('.result');
     let numCon = document.querySelector('.numbers');
 
-    let numArray = [
+    let buttons = [
         { id: "clearAll", text: "AC", type: "action" },
-        {id: "delete", text: "del", type: "action"  },
-        { id: "divide", text: "/", type: "operator"  },
-        { id: "7", text: "7", type: "number"  },
-        { id: "8", text: "8", type: "number"  },
-        { id: "9", text: "9", type: "number"  },
-        { id: "multiply", text: "x", type: "operator"  },
-        { id: "4", text: "4", type: "number"  },
-        { id: "5", text: "5", type: "number"  },
-        { id: "6", text: "6", type: "number"  },
-        { id: "subtract", text: "-", type: "operator"  },
-        { id: "1", text: "1", type: "number"  },
-        { id: "2", text: "2", type: "number"  },
-        { id: "3", text: "3", type: "number"  },
-        { id: "add", text: "+", type: "operator"  },
-        { id: "0", text: "0", type: "number"  },
-        { id: "decimal", text: ".", type: "number"  },
-        { id: "equals", text: "=", type: "action"  },]
+        {id: "delete", text: "del", type: "action" },
+        { id: "divide", text: "/", type: "operator" },
+        { id: "7", text: "7", type: "number" },
+        { id: "8", text: "8", type: "number" },
+        { id: "9", text: "9", type: "number" },
+        { id: "multiply", text: "x", type: "operator" },
+        { id: "4", text: "4", type: "number" },
+        { id: "5", text: "5", type: "number" },
+        { id: "6", text: "6", type: "number" },
+        { id: "subtract", text: "-", type: "operator" },
+        { id: "1", text: "1", type: "number" },
+        { id: "2", text: "2", type: "number" },
+        { id: "3", text: "3", type: "number" },
+        { id: "add", text: "+", type: "operator" },
+        { id: "0", text: "0", type: "number" },
+        { id: "decimal", text: ".", type: "number" },
+        { id: "equals", text: "=", type: "action" },]
 
-    for (let i=0; i<=19; 1++) {
-        let numBox = document.createElement('div');
-        numBox
-    }
+        let calcConSize = 100/ buttons.length;
+
+buttons.forEach(button => {
+    let newButton = document.createElement('div');
+    div.id = button.id;
+    newButton.classList.add('button',button.type);
+    newButton.style.flex = `0 0 calc(${calcConSize}% - 1px)`;
+
+})
 
 
 
