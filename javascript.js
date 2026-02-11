@@ -29,6 +29,7 @@ buttons.forEach(button => {
     let newButton = document.createElement('div');
     newButton.id = button.id;
     newButton.classList.add('button',button.type);
+    newButton.textContent = button.text;
     numCon.appendChild(newButton);
 
 })
