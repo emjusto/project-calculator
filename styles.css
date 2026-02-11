@@ -37,6 +37,11 @@ body {
     /* height: 100px; */
     flex: 1;
     min-height: 0;
+    font-size: 30px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 5px;
 }
 .numbersCon {
     display: flex;
@@ -50,12 +55,20 @@ body {
 }
 
 .button {
+    display: flex;
     border: 1px solid black;
     border-radius: 15px;
     height: calc((100% - 4 * 15px) / 5);
     flex: 0 0 calc((100% - 3 * 15px) / 4);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 
 #clearAll, #equals {
     flex: 0 0 calc((100% - 1 * 15px) / 2);
+}
+
+.button:hover {
+    background-color: aqua;;
 }

@@ -2,10 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let calculatorCon = document.querySelector('.calc-box');
     let resultCon = document.querySelector('.resultCon');
     let numCon = document.querySelector('.numbersCon');
+    let resultText = document.querySelector('.resultCon').textContent;
 
     let buttons = [
         { id: "clearAll", text: "AC", type: "action" },
-        {id: "delete", text: "del", type: "action" },
+        {id: "delete", text: "DEL", type: "action" },
         { id: "divide", text: "/", type: "operator" },
         { id: "7", text: "7", type: "number" },
         { id: "8", text: "8", type: "number" },
@@ -23,25 +24,75 @@ document.addEventListener("DOMContentLoaded", () => {
         { id: "decimal", text: ".", type: "number" },
         { id: "equals", text: "=", type: "action" },]
 
-        let calcConSize = 25;
 
 buttons.forEach(button => {
     let newButton = document.createElement('div');
     newButton.id = button.id;
     newButton.classList.add('button',button.type);
     newButton.textContent = button.text;
-    numCon.appendChild(newButton);
 
+    newButton.dataset.text = button.text;
+    newButton.dataset.type = button.type;
+
+    numCon.appendChild(newButton);
 })
 
 
+numCon.addEventListener('click', (e) => {
 
-    let firstNum = 0;
-    let secondNum = 0;
+    if (e.target.dataset.type === 'number') {
+        if (operator === "") {
+            resultCon.textContent += ` ${e.target.dataset.text}`;
+            firstNum += parseFloat(e.target.dataset.text);
+            console.log("first num: " + firstNum) 
+        } else {
+            if (secondNum === "") {
+                resultCon.textContent = "";
+            }
+            resultCon.textContent += ` ${e.target.dataset.text}`;
+            secondNum += parseFloat(e.target.dataset.text);
+            console.log("second num: " + secondNum) 
+        }
+    }
+    if (e.target.dataset.type === 'operator') {
+        operator = e.target.dataset.text
+        console.log("operator: " + operator)  
+    }
+    if (e.target.id === "equals") {
+            console.log("EQUALS");
+            operate(firstNum,secondNum,operator); 
+        }
+
+    // if (e.target.dataset.type === 'operator' && operator === "" && firstNum != "") {
+    //     operator = e.target.dataset.text
+    //     console.log("operator: " + operator)
+    // }
+    // else if (e.target.dataset.type === 'number' && firstNum === "" && operator === "") {
+    //     resultCon.textContent += ` ${e.target.dataset.text}`;
+    //     firstNum = parseFloat(e.target.dataset.text);
+    //     console.log("first num: " + firstNum) 
+
+    // } else if (e.target.dataset.type === 'number' && operator !== "") {
+    //     resultCon.textContent += ` ${e.target.dataset.text}`;
+    //     secondNum = parseFloat(e.target.dataset.text);   
+    //     console.log("second num: " + secondNum )  
+    // } else if (e.target.id === "equals" && secondNum !== "") {
+    //     console.log("EQUALS");
+    //     operate(firstNum,secondNum,operator); 
+    // }
+});
+  
+    let firstNum = ""; 
+    let secondNum = "";
     let operator = "";
 
     function add(a,b) {
-        return a + b;
+        let sum = (isNaN(parseFloat(a)) ? 0 : parseFloat(a)) + (isNaN(parseFloat(b)) ? 0 : parseFloat(b));
+        resultCon.textContent = sum;
+        firstNum = sum;
+        operator = "";
+        secondNum = ""; 
+        return console.log(sum);
     }
     function subtract(a,b) {
         return a - b;
@@ -69,3 +120,4 @@ buttons.forEach(button => {
 
 
 })
+
