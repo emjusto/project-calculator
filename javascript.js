@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let resultCon = document.querySelector('.resultCon');
     let numCon = document.querySelector('.numbersCon');
     let resultText = document.querySelector('.resultCon').textContent;
-
+    
     let buttons = [
         { id: "clearAll", text: "AC", type: "action" },
         {id: "delete", text: "DEL", type: "action" },
@@ -39,47 +39,44 @@ buttons.forEach(button => {
 
 
 numCon.addEventListener('click', (e) => {
+    let buttonType = e.target.dataset.type;
+    let buttonId = e.target.id;
+    let buttonText = e.target.dataset.text;
 
-    if (e.target.dataset.type === 'number') {
+    if (buttonType === 'number') {
         if (operator === "") {
-            resultCon.textContent += ` ${e.target.dataset.text}`;
-            firstNum += parseFloat(e.target.dataset.text);
+            resultCon.textContent += ` ${buttonText}`;
+            firstNum += parseFloat(buttonText);
             console.log("first num: " + firstNum) 
         } else {
             if (secondNum === "") {
                 resultCon.textContent = "";
             }
-            resultCon.textContent += ` ${e.target.dataset.text}`;
-            secondNum += parseFloat(e.target.dataset.text);
+            resultCon.textContent += ` ${buttonText}`;
+            secondNum += parseFloat(buttonText);
             console.log("second num: " + secondNum) 
         }
     }
-    if (e.target.dataset.type === 'operator') {
+    if (buttonType === 'operator') {
+        if (operator !== "" && secondNum !== ""){
+            firstNum = operate(firstNum,secondNum,operator); 
+            secondNum = ""; 
+        }
         operator = e.target.dataset.text
         console.log("operator: " + operator)  
     }
-    if (e.target.id === "equals") {
+    if (buttonId === "equals") {
             console.log("EQUALS");
-            operate(firstNum,secondNum,operator); 
+            if (firstNum === ""  || operator === "" || secondNum === "") {
+                return;
+            }
+            console.log("first: " + firstNum+ " second: " + secondNum +  " operator: " + operator)
+            firstNum = operate(firstNum,secondNum,operator); 
+            secondNum = ""; 
         }
-
-    // if (e.target.dataset.type === 'operator' && operator === "" && firstNum != "") {
-    //     operator = e.target.dataset.text
-    //     console.log("operator: " + operator)
-    // }
-    // else if (e.target.dataset.type === 'number' && firstNum === "" && operator === "") {
-    //     resultCon.textContent += ` ${e.target.dataset.text}`;
-    //     firstNum = parseFloat(e.target.dataset.text);
-    //     console.log("first num: " + firstNum) 
-
-    // } else if (e.target.dataset.type === 'number' && operator !== "") {
-    //     resultCon.textContent += ` ${e.target.dataset.text}`;
-    //     secondNum = parseFloat(e.target.dataset.text);   
-    //     console.log("second num: " + secondNum )  
-    // } else if (e.target.id === "equals" && secondNum !== "") {
-    //     console.log("EQUALS");
-    //     operate(firstNum,secondNum,operator); 
-    // }
+    if (buttonId === "clearAll") {
+        clear();
+    }
 });
   
     let firstNum = ""; 
@@ -89,19 +86,30 @@ numCon.addEventListener('click', (e) => {
     function add(a,b) {
         let sum = (isNaN(parseFloat(a)) ? 0 : parseFloat(a)) + (isNaN(parseFloat(b)) ? 0 : parseFloat(b));
         resultCon.textContent = sum;
-        firstNum = sum;
-        operator = "";
-        secondNum = ""; 
-        return console.log(sum);
+        operator = "+";
+        console.log(sum);
+        return sum
     }
     function subtract(a,b) {
-        return a - b;
+        let difference = (isNaN(parseFloat(a)) ? 0 : parseFloat(a)) - (isNaN(parseFloat(b)) ? 0 : parseFloat(b));
+        resultCon.textContent = difference;
+        operator = "-";
+        console.log(difference);
+        return difference;
     }
     function multiply(a,b) {
-        return a * b;
+        let product = (isNaN(parseFloat(a)) ? 1 : parseFloat(a)) * (isNaN(parseFloat(b)) ? 1 : parseFloat(b));
+        resultCon.textContent = product;
+        operator = "x";
+        console.log(product);
+        return product;
     }
     function divide(a,b) {
-        return a / b;
+        let quotient = (isNaN(parseFloat(a)) ? 0 : parseFloat(a)) / (isNaN(parseFloat(b)) ? 1 : parseFloat(b));
+        resultCon.textContent = quotient;
+        operator = "/";
+        console.log(quotient);
+        return quotient;
 
     }
 
@@ -111,11 +119,18 @@ numCon.addEventListener('click', (e) => {
                 return add(num1,num2);
             case '-':
                 return subtract(num1,num2);
-            case '*':
+            case 'x':
                 return multiply(num1,num2);
             case '/':
                 return divide(num1,num2);
         }
+    }
+
+    function clear() {
+        firstNum = ""; 
+        secondNum = "";
+        operator = "";
+        resultCon.textContent = "";
     }
 
 
