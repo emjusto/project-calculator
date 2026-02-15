@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let calculatorCon = document.querySelector('.calc-box');
     let resultCon = document.querySelector('.resultCon');
     let numCon = document.querySelector('.numbersCon');
-    let resultText = document.querySelector('.resultCon').textContent;
     
     let buttons = [
         { id: "clearAll", text: "AC", type: "action" },
@@ -44,23 +43,36 @@ numCon.addEventListener('click', (e) => {
     let buttonText = e.target.dataset.text;
 
     if (buttonType === 'number') {
+        if (buttonId === "decimal") {
+            if (decimal !== "") {
+                return;
+            }
+            decimal = ".";
+        }
         if (operator === "") {
-            resultCon.textContent += ` ${buttonText}`;
-            firstNum += parseFloat(buttonText);
+            if (resultCon.textContent === "1234567890" || resultCon.textContent === "0") {
+                resultCon.textContent = "";
+            }
+            resultCon.textContent += `${buttonText}`;
+            firstNum += buttonText;
             console.log("first num: " + firstNum) 
         } else {
             if (secondNum === "") {
                 resultCon.textContent = "";
+                decimal = "";
             }
-            resultCon.textContent += ` ${buttonText}`;
-            secondNum += parseFloat(buttonText);
+            resultCon.textContent += `${buttonText}`;
+            secondNum += buttonText;
             console.log("second num: " + secondNum) 
         }
     }
     if (buttonType === 'operator') {
         if (operator !== "" && secondNum !== ""){
-            firstNum = operate(firstNum,secondNum,operator); 
+            firstNum = parseFloat(operate(firstNum,secondNum,operator).toFixed(2)); 
+            resultCon.textContent = firstNum;
             secondNum = ""; 
+            decimal = "";
+
         }
         operator = e.target.dataset.text
         console.log("operator: " + operator)  
@@ -71,9 +83,24 @@ numCon.addEventListener('click', (e) => {
                 return;
             }
             console.log("first: " + firstNum+ " second: " + secondNum +  " operator: " + operator)
-            firstNum = operate(firstNum,secondNum,operator); 
+            firstNum = parseFloat(operate(firstNum,secondNum,operator).toFixed(2)); 
+            resultCon.textContent = firstNum;
             secondNum = ""; 
+            decimal = "";
+
         }
+    if (buttonId === "delete") {
+        let text = resultCon.textContent;
+        text = text.slice(0,-1);
+        resultCon.textContent = text;
+
+        if (secondNum !== "") {
+            secondNum = text;
+        }
+        else {
+            firstNum = text;
+        }
+    }
     if (buttonId === "clearAll") {
         clear();
     }
@@ -82,31 +109,32 @@ numCon.addEventListener('click', (e) => {
     let firstNum = ""; 
     let secondNum = "";
     let operator = "";
+    let decimal = "";
 
     function add(a,b) {
         let sum = (isNaN(parseFloat(a)) ? 0 : parseFloat(a)) + (isNaN(parseFloat(b)) ? 0 : parseFloat(b));
-        resultCon.textContent = sum;
         operator = "+";
         console.log(sum);
         return sum
     }
     function subtract(a,b) {
         let difference = (isNaN(parseFloat(a)) ? 0 : parseFloat(a)) - (isNaN(parseFloat(b)) ? 0 : parseFloat(b));
-        resultCon.textContent = difference;
         operator = "-";
         console.log(difference);
         return difference;
     }
     function multiply(a,b) {
         let product = (isNaN(parseFloat(a)) ? 1 : parseFloat(a)) * (isNaN(parseFloat(b)) ? 1 : parseFloat(b));
-        resultCon.textContent = product;
         operator = "x";
         console.log(product);
         return product;
     }
     function divide(a,b) {
+        if (b === "0") {
+            clear();
+            return resultCon.textContent = "ERROR";
+        }
         let quotient = (isNaN(parseFloat(a)) ? 0 : parseFloat(a)) / (isNaN(parseFloat(b)) ? 1 : parseFloat(b));
-        resultCon.textContent = quotient;
         operator = "/";
         console.log(quotient);
         return quotient;
@@ -130,7 +158,8 @@ numCon.addEventListener('click', (e) => {
         firstNum = ""; 
         secondNum = "";
         operator = "";
-        resultCon.textContent = "";
+        decimal = "";
+        resultCon.textContent = "0";
     }
 
 
