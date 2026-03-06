@@ -45,25 +45,25 @@ numCon.addEventListener('click', (e) => {
     if (buttonType === 'number') {
         if (buttonId === "decimal") {
             if (decimal !== "") {
-                return;
-            }
-            decimal = ".";
+            return;
         }
+        decimal = ".";
+    }
         if (operator === "") {
-            if (resultCon.textContent === "1234567890" || resultCon.textContent === "0") {
+            if (resultCon.textContent === "0") {
                 resultCon.textContent = "";
             }
             resultCon.textContent += `${buttonText}`;
             firstNum += buttonText;
             console.log("first num: " + firstNum) 
-        } else {
+        } 
+        if (operator !== "") {
             if (secondNum === "") {
                 resultCon.textContent = "";
-                decimal = "";
             }
             resultCon.textContent += `${buttonText}`;
             secondNum += buttonText;
-            console.log("second num: " + secondNum) 
+            console.log("second num: " + secondNum)
         }
     }
     if (buttonType === 'operator') {
@@ -75,6 +75,7 @@ numCon.addEventListener('click', (e) => {
 
         }
         operator = e.target.dataset.text
+        decimal = "";
         console.log("operator: " + operator)  
     }
     if (buttonId === "equals") {
